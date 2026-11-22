@@ -1,10 +1,13 @@
-"""Round 3 plan: sell thumbnail packs to small YouTubers.
+"""Round 4 plan: sell stale-listing rescue packs to real-estate agents.
 
-The buyer: a channel with 5k-100k subscribers that still posts weekly
-but averages views under 20% of its subscriber count. That gap is
-visible from search results alone, so the pitch needs no insider
-data. The deliverable is files (3 thumbnails + 3 titles in 24h), so
-no account access, no platform approval, and nothing to wait on.
+The buyer: a listing agent whose home has sat unsold 30+ days.
+Days-on-market is public on Zillow and Redfin, so the pain is
+visible from search results alone and the target list costs
+nothing to build. The deliverable is files only (a rewritten
+listing description, 10 photo captions, open-house flyer text,
+delivered in 24h), so no account access, no platform approval,
+and nothing to wait on. A stale listing costs the agent a
+commission; a $59 fix is a rounding error against it.
 """
 
 import hashlib
@@ -14,12 +17,12 @@ import sys
 # Funnel inputs. Every figure below is a real input; nothing here is
 # a placeholder, and the plan text is built from these numbers so the
 # words can never drift away from the math.
-OUTREACH_PER_DAY = 50   # channels contacted per day (business email
-                        # on the channel About page, or a comment + DM)
+OUTREACH_PER_DAY = 40   # agents contacted per day (agent email on
+                        # the brokerage site, or a DM on the listing)
 DAYS = 30
 REPLY_RATE = 0.10       # 1 in 10 replies
-CLOSE_RATE = 0.40       # 2 in 5 replies buy
-PRICE = 39              # dollars per pack
+CLOSE_RATE = 0.35       # about 1 in 3 replies buys
+PRICE = 59              # dollars per rescue pack
 OUTREACH_BUDGET = 100   # dollars: email finder + inbox warm-up
 FEE_RATE = 0.029        # payment-processor cut
 
@@ -42,13 +45,14 @@ def build_plan(sales: int, revenue: int, net: int) -> str:
     """Assemble the entry text from the computed funnel numbers."""
     kept = (net // 10) * 10  # quote the kept cash rounded down to $10
     parts = [
-        f"Day 1: find {OUTREACH_PER_DAY} YouTubers (5k-100k subs) "
-        "with views under 20% of subs.",
-        f"Sell a ${PRICE} pack: 3 thumbnails + 3 titles in 24h.",
+        "Day 1: find 40 agents with listings stale 30+ days "
+        "on Zillow.",
+        f"Sell a ${PRICE} pack: rewritten description, 10 photo "
+        "captions, flyer text in 24h.",
         f"${OUTREACH_BUDGET} covers outreach.",
-        f"Close 2/day: {sales} packs = ${revenue:,}, keep ~${kept:,}.",
-        "Edge: weak thumbnails show in search \u2014 files only, "
-        "no access needed.",
+        f"{sales} packs = ${revenue:,}, keep ~${kept:,}.",
+        "Edge: stale days are public, so targeting is free; "
+        "files only, no access.",
     ]
     return " ".join(parts)
 
@@ -69,23 +73,24 @@ def check_plan(text: str, revenue: int, sales: int, net: int) -> None:
         raise ValueError("plan must name a day-1 action and a price")
     if f"${revenue:,}" not in text:
         raise ValueError("plan must state the computed revenue")
-    # The text claims "Close 2/day": the funnel must actually yield 2.
-    if sales // DAYS != 2 or sales % DAYS != 0:
-        raise ValueError(f"funnel yields {sales / DAYS}/day, not 2/day")
+    if f"{sales} packs" not in text:
+        raise ValueError("plan must state the computed pack count")
+    kept = (net // 10) * 10
+    if f"${kept:,}" not in text:
+        raise ValueError("plan must state the computed kept cash")
+    if f"${PRICE}" not in text:
+        raise ValueError("plan must state the pack price")
     if net < 2000:
         raise ValueError(f"net ${net:,} is below the $2,000 bar")
 
 
 def projection(sales: int, revenue: int) -> str:
-    """Cumulative sales/revenue at day 10, 20 and 30."""
-    per_day_sales = sales // DAYS
-    per_day_revenue = revenue // DAYS
+    """Cumulative packs/revenue at day 10, 20 and 30."""
     marks = []
     for day in (10, 20, 30):
-        marks.append(
-            f"day {day}: {per_day_sales * day} packs "
-            f"${per_day_revenue * day:,}"
-        )
+        packs = sales * day // DAYS
+        money = revenue * day // DAYS
+        marks.append(f"day {day}: {packs} packs ${money:,}")
     return " | ".join(marks)
 
 

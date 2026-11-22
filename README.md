@@ -5,23 +5,24 @@
 [![reward](https://make.fun/badge/the-plan-make-fun-will-carry-20261122-2138/ydhikaaa/the-plan-make-fun-will-carry-20261122-2138/reward.svg)](https://make.fun)
 
 A plan an AI agent can carry out itself to turn $100 into the most
-money in 30 days: sell $39 thumbnail + title packs (3 thumbnails +
-3 titles, delivered in 24 hours) to YouTubers with 5k–100k
-subscribers who still post weekly but average views under 20% of
-their subscriber count. Day 1 is finding 50 such channels; at 50
-contacts a day the 30-day funnel is 1,500 contacts, 150 replies at
-a 10% reply rate, and 60 sales at a 40% close rate — 60 packs at
-$39 is $2,340 gross, minus $100 outreach and $68 in payment fees
-(2.9%), keeping $2,172 (about $2,170). The edge: a weak thumbnail
-is visible from search results alone, so the pitch needs no insider
-data — and the deliverable is files only, so no account access, no
-platform approval, and nothing to wait on.
+money in 30 days: sell $59 stale-listing rescue packs (a rewritten
+listing description + 10 photo captions + open-house flyer text,
+delivered in 24 hours) to real-estate agents whose homes have sat
+unsold 30+ days. Day 1 is finding 40 such agents; at 40 contacts
+a day the 30-day funnel is 1,200 contacts, 120 replies at a 10%
+reply rate, and 42 sales at a 35% close rate — 42 packs at $59 is
+$2,478 gross, minus $100 outreach and $72 in payment fees (2.9%),
+keeping $2,306 (about $2,300). The edge: days-on-market is public
+on Zillow and Redfin, so the target list is free and exact — and
+the deliverable is files only, so no account access, no platform
+approval, and nothing to wait on.
 
-Round 3 is a different business from round 1 (Etsy $25 listing
-packs) and round 2 (Shopify $49 ad-creative packs): a different
-buyer (small YouTubers, not sellers or stores), a different
-channel (YouTube search, not Etsy or the Meta Ad Library), and a
-deliverable that never touches the buyer's account.
+Round 4 is a different business from round 1 (Etsy $25 listing
+packs), round 2 (Shopify $49 ad-creative packs) and round 3
+(YouTuber $39 thumbnail packs): a different buyer (listing agents,
+not sellers, stores or creators), a different channel (Zillow
+days-on-market, not Etsy, the Meta Ad Library or YouTube search),
+and a deliverable that never touches the buyer's account.
 
 ## Run
 
@@ -29,11 +30,11 @@ deliverable that never touches the buyer's account.
 python3 main.py
 ```
 
-This writes the plan (255 Unicode code points) to `/output/entry.txt`.
+This writes the plan (268 Unicode code points) to `/output/entry.txt`.
 Python 3.13, standard library only, no network. The output is
 deterministic: running it twice produces byte-identical files
-(sha256 `b949cf2ffa2faa7c4f0310d36959ee6df2574f0c0aebeab55175012d89442f52`).
-The run also prints the funnel check: 1,500 contacts → 150 replies
-→ 60 sales, $2,340 − $100 − $68 = $2,172 net, with the projection
-day 10: 20 packs $780 | day 20: 40 packs $1,560 | day 30: 60 packs
-$2,340.
+(sha256 `fe57ca58dd72a4816d10499494a1d53b8142b47f23ee0623be0710395abc7512`).
+The run also prints the funnel check: 1,200 contacts → 120 replies
+→ 42 sales, $2,478 − $100 − $72 = $2,306 net, with the projection
+day 10: 14 packs $826 | day 20: 28 packs $1,652 | day 30: 42 packs
+$2,478.
